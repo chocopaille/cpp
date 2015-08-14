@@ -11,8 +11,11 @@ class Duree
 	Duree(int heures = 0, int minutes = 0, int secondes = 0);
 	bool egal(Duree const& duree1) const;
 	bool inferior(Duree const& b) const;
+    Duree& operator+=(Duree const& b);
+    Duree& operator-=(Duree const& b);
+    void print_estate(void) const;
 
-	private:
+    private:
 
 	int m_heures;
 	int m_minutes;
@@ -25,5 +28,7 @@ bool operator<(Duree const& a, Duree const& b);
 bool operator>(Duree const& a, Duree const& b);
 bool operator>=(Duree const& a, Duree const& b);
 bool operator<=(Duree const& a, Duree const& b);
+Duree operator+(Duree const& a, Duree const& b);
+Duree operator-(Duree const &a, Duree const& b);
 
 #endif

@@ -8,7 +8,7 @@ int main()
 {
 	Personnage david, goliath("Iron edge", 20);
 
-	goliath.attack(david);
+	goliath.physical_attack(david);
 	david.heal(20);
 	goliath.physical_attack(david);
 	david.physical_attack(goliath);

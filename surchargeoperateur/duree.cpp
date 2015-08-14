@@ -37,6 +37,41 @@ bool Duree::inferior(Duree const&b) const
 		return (false);
 }
 
+Duree& Duree::operator+=(Duree const& b)
+{
+	m_secondes += b.m_secondes;
+	m_minutes += m_secondes / 60;
+	m_secondes %= 60;
+	m_minutes += b.m_minutes;
+	m_heures += m_minutes / 60;
+	m_minutes %= 60;
+	m_heures += b.m_heures;
+	return (*this);
+}
+
+Duree& Duree::operator-=(Duree const& b)
+{
+	m_secondes -= b.m_secondes;
+	if (m_secondes < 0)
+	{
+		m_secondes = 0
+		m_minutes--;
+	}
+	m_minutes -= b.m_minutes;
+	if (m_minutes < 0)
+	{
+		m_minutes = 0;
+		m_heures--;
+	}
+	m_heures -= b.m_heures;
+	return (*this);
+}
+
+void Duree::print_estate() const
+{
+	cout << m_heures << "h" << m_minutes << "m" << m_secondes << "s" << endl;
+}
+
 bool operator==(Duree const& a, Duree const& b)
 {
 	return (a.egal(b));
@@ -62,7 +97,21 @@ bool operator>=(Duree const& a, Duree const& b)
 	return (a > b || a == b);
 }
 
-bool operator>=(Duree const& a, Duree const& b)
+bool operator<=(Duree const& a, Duree const& b)
 {
 	return (a < b || a == b);
+}
+
+Duree operator+(Duree const& a, Duree const& b)
+{
+	Duree	result(a);
+	result += b;
+	return (result);
+}
+
+Duree operator-(Duree const& a, Duree const& b)
+{
+	Duree	result(a);
+	result -= b;
+	return (result);
 }
