@@ -3,7 +3,8 @@
 
 using namespace std;
 
-Duree::Duree(int heures, int minutes, int secondes) : m_heures(heures), m_minutes(minutes), m_secondes(secondes)
+Duree::Duree(int heures, int minutes, int secondes) : m_heures(heures),
+m_minutes(minutes), m_secondes(secondes)
 {
 	while (m_secondes >= 60)
 	{
@@ -19,7 +20,8 @@ Duree::Duree(int heures, int minutes, int secondes) : m_heures(heures), m_minute
 
 bool Duree::egal(Duree const& b) const
 {
-	if (b.m_heures == m_heures && b.m_minutes == m_minutes && b.m_secondes == m_secondes)
+	if (b.m_heures == m_heures && b.m_minutes == m_minutes &&
+	b.m_secondes == m_secondes)
 		return (true);
 	else
 		return (false);
@@ -31,7 +33,8 @@ bool Duree::inferior(Duree const&b) const
 		return (true);
 	else if (m_heures == b.m_heures && m_minutes < b.m_minutes)
 		return (true);
-	else if (m_heures == b.m_heures && m_minutes == b.m_minutes && m_secondes < b.m_secondes)
+	else if (m_heures == b.m_heures && m_minutes == b.m_minutes &&
+	m_secondes < b.m_secondes)
 		return (true);
 	else
 		return (false);
@@ -51,25 +54,17 @@ Duree& Duree::operator+=(Duree const& b)
 
 Duree& Duree::operator-=(Duree const& b)
 {
-	m_secondes -= b.m_secondes;
-	if (m_secondes < 0)
-	{
-		m_secondes = 0
-		m_minutes--;
-	}
-	m_minutes -= b.m_minutes;
-	if (m_minutes < 0)
-	{
-		m_minutes = 0;
-		m_heures--;
-	}
-	m_heures -= b.m_heures;
+	m_secondes = m_heures * 3600 + m_minutes * 60 + m_secondes - (b.m_heures * 3600 + b.m_minutes * 60 + b.m_secondes);
+	m_heures = m_secondes / 60;
+	m_secondes = m_secondes % 60;
+	m_minutes = m_secondes / 60;
+	m_secondes = m_secondes % 60;
 	return (*this);
 }
 
-void Duree::print_estate() const
+void Duree::print_estate(std::ostream &flux) const
 {
-	cout << m_heures << "h" << m_minutes << "m" << m_secondes << "s" << endl;
+	flux << m_heures << "h" << m_minutes << "m" << m_secondes << "s";
 }
 
 bool operator==(Duree const& a, Duree const& b)
@@ -114,4 +109,10 @@ Duree operator-(Duree const& a, Duree const& b)
 	Duree	result(a);
 	result -= b;
 	return (result);
+}
+
+ostream& operator<<(ostream &flux, Duree const& duree)
+{
+	duree.print_estate(flux);
+	return (flux);
 }

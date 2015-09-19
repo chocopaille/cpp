@@ -13,7 +13,7 @@ class Duree
 	bool inferior(Duree const& b) const;
     Duree& operator+=(Duree const& b);
     Duree& operator-=(Duree const& b);
-    void print_estate(void) const;
+    void print_estate(ostream &flux) const;
 
     private:
 
@@ -30,5 +30,6 @@ bool operator>=(Duree const& a, Duree const& b);
 bool operator<=(Duree const& a, Duree const& b);
 Duree operator+(Duree const& a, Duree const& b);
 Duree operator-(Duree const &a, Duree const& b);
+ostream& operator<<(ostream &flux, Duree const& duree);
 
 #endif
